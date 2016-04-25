@@ -14,10 +14,14 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'ctrlpvim/ctrlp.vim'
-"Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 "Plugin 'vim-ctrlspace/vim-ctrlspace'
 Plugin 'Raimondi/delimitMate'
 Plugin 'honza/vim-snippets'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-unimpaired'
 
 call vundle#end()
 filetype plugin indent on
@@ -29,8 +33,10 @@ set number
 set showcmd
 set incsearch
 "set hlsearch
+set tabstop=4
+set clipboard=unnamed
 
-syntax on
+"syntax on
 set mouse=a
 
 " NERDTree stuff
@@ -61,7 +67,7 @@ set background=dark
 colorscheme solarized
 
 "For airline
-"let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#left_alt_sep = '>'
 
 "For delimiters
@@ -79,3 +85,21 @@ nmap <silent> <A-Up> :wincmd k<CR>
 nmap <silent> <A-Down> :wincmd j<CR>
 nmap <silent> <A-Left> :wincmd h<CR>
 nmap <silent> <A-Right> :wincmd l<CR>
+
+"Easy tab navigation
+map <S-Right> :tabn<CR>
+map <S-Left>  :tabp<CR>
+"Easy buffer(tab) navigation
+map <S-A-Right> :bn<CR>
+map <S-A-Left>  :bp<CR>
+
+"For searcing with Crtl + F
+"":map <C-f> :vimgrep /<C-R><C-W>/ **<left><left><left>
+map <C-f> :call VIMGREP("/<C-R><C-W>/", "**")<left><left><left>
+map <S-f> :call VIMGREP("/<C-R><C-W>/", @%)<left><left><left>
+
+:fu! VIMGREP(greppattern, greppath)
+	exe "vimgrep ".a:greppattern." ".a:greppath
+	exe "copen"
+endfu
+
