@@ -19,9 +19,14 @@ Plugin 'vim-airline/vim-airline-themes'
 "Plugin 'vim-ctrlspace/vim-ctrlspace'
 Plugin 'Raimondi/delimitMate'
 Plugin 'honza/vim-snippets'
+Plugin 'SirVer/ultisnips'
+"Plugin 'Shougo/neocomplete.vim'
+"Plugin 'valloric/youcompleteme'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-unimpaired'
+"NERDcommenter
+Plugin 'scrooloose/nerdcommenter'
 
 call vundle#end()
 filetype plugin indent on
@@ -33,8 +38,9 @@ set number
 set showcmd
 set incsearch
 "set hlsearch
-set tabstop=4
+"set tabstop=4
 set clipboard=unnamed
+set tabstop=4 shiftwidth=4 expandtab
 
 "syntax on
 set mouse=a
@@ -93,6 +99,9 @@ map <S-Left>  :tabp<CR>
 map <S-A-Right> :bn<CR>
 map <S-A-Left>  :bp<CR>
 
+"For Undo
+map <C-z> :u<CR>
+
 "For searcing with Crtl + F
 "":map <C-f> :vimgrep /<C-R><C-W>/ **<left><left><left>
 map <C-f> :call VIMGREP("/<C-R><C-W>/", "**")<left><left><left>
@@ -102,4 +111,11 @@ map <S-f> :call VIMGREP("/<C-R><C-W>/", @%)<left><left><left>
 	exe "vimgrep ".a:greppattern." ".a:greppath
 	exe "copen"
 endfu
+
+""For snippets
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
 
