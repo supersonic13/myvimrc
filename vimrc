@@ -28,6 +28,9 @@ Plugin 'tpope/vim-unimpaired'
 "NERDcommenter
 Plugin 'scrooloose/nerdcommenter'
 
+" Shell inside VIM !
+Plugin 'jewes/Conque-Shell'
+
 call vundle#end()
 filetype plugin indent on
 
@@ -119,3 +122,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+" For shell 
+autocmd BufEnter * silent! lcd %:p:h
+"map <leader>s :ConqueTermSplit bash<CR>
