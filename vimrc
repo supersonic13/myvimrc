@@ -70,9 +70,11 @@ autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
 let g:ctrlp_cmd = 'CtrlP'
 
 " FOr solarised
-syntax enable
+"syntax enable
+syntax on
+set t_Co=256
+let g:solarized_termcolors=256
 set background=dark
-"set t_Co=16
 colorscheme solarized
 
 "For airline
