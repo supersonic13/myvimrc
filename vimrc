@@ -28,8 +28,11 @@ Plugin 'tpope/vim-unimpaired'
 "NERDcommenter
 Plugin 'scrooloose/nerdcommenter'
 
-" Shell inside VIM !
-Plugin 'jewes/Conque-Shell'
+"" Shell inside VIM !
+"Plugin 'jewes/Conque-Shell'
+
+"For Puppet
+Plugin 'rodjek/vim-puppet'
 
 call vundle#end()
 filetype plugin indent on
@@ -127,3 +130,11 @@ let g:UltiSnipsEditSplit="vertical"
 " For shell 
 autocmd BufEnter * silent! lcd %:p:h
 "map <leader>s :ConqueTermSplit bash<CR>
+"
+""For CTAGS
+" map <S-.> :tag <C-R><C-W><CR>
+
+
+"Awesome completion thing - Thanks to Gav !! C-X C-P !!!! 
+"set omnifunc=syntaxcomplete#Complete
+
