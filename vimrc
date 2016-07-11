@@ -71,6 +71,11 @@ autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
 
 "For Ctrl-P
 let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
 
 " FOr solarised
 "syntax enable
