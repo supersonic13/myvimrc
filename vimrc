@@ -28,11 +28,11 @@ Plugin 'tpope/vim-unimpaired'
 "NERDcommenter
 Plugin 'scrooloose/nerdcommenter'
 
-"" Shell inside VIM !
-"Plugin 'jewes/Conque-Shell'
-
 "For Puppet
 Plugin 'rodjek/vim-puppet'
+
+" FOr CTAGS
+Plugin 'craigemery/vim-autotag'
 
 call vundle#end()
 filetype plugin indent on
@@ -43,9 +43,14 @@ set ruler
 set number
 set showcmd
 set incsearch
+set nobackup
+set noswapfile
+set ignorecase
 "set hlsearch
 "set tabstop=4
-set clipboard=unnamed
+if has('unnamedplus')
+      set clipboard=unnamed,unnamedplus
+endif
 set tabstop=4 shiftwidth=4 expandtab
 
 "syntax on
@@ -69,6 +74,13 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 "let NERDTreeMapOpenInTab='<ENTER>'
 autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
 
+"NerdTree tab mappings by number (Alt + F1, etc)
+"nnoremap <S-F1> 1gt
+"nnoremap <S-2> 2gt
+"nnoremap <S-3> 3gt
+"nnoremap <S-4> 4gt
+"nnoremap <S-5> 5gt
+
 "For Ctrl-P
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_clear_cache_on_exit = 0
@@ -87,7 +99,6 @@ colorscheme solarized
 
 "For airline
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#left_alt_sep = '>'
 
 "For delimiters
 let delimitMate_expand_cr = 1
@@ -116,7 +127,6 @@ map <S-A-Left>  :bp<CR>
 map <C-z> :u<CR>
 
 "For searcing with Crtl + F
-"":map <C-f> :vimgrep /<C-R><C-W>/ **<left><left><left>
 map <C-f> :call VIMGREP("/<C-R><C-W>/", "**")<left><left><left>
 map <S-f> :call VIMGREP("/<C-R><C-W>/", @%)<left><left><left>
 
@@ -133,7 +143,7 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 " For shell 
-autocmd BufEnter * silent! lcd %:p:h
+"autocmd BufEnter * silent! lcd %:p:h
 "map <leader>s :ConqueTermSplit bash<CR>
 "
 ""For CTAGS
@@ -143,3 +153,35 @@ autocmd BufEnter * silent! lcd %:p:h
 "Awesome completion thing - Thanks to Gav !! C-X C-P !!!! 
 "set omnifunc=syntaxcomplete#Complete
 
+"Toggling key for selecing and pasting
+nnoremap <F5> :call ShowBasicVIM()<cr>
+function! ShowBasicVIM()
+    NERDTreeToggle
+    "NERDTreeFocusToggle
+    "set nonumber
+    set invnumber
+endfunction
+
+"" SET CSCOPE : TODO - Try cscope properly
+"if has('cscope')
+  "set cscopetag cscopeverbose
+
+  "if has('quickfix')
+    "set cscopequickfix=s-,c-,d-,i-,t-,e-
+  "endif
+
+  "cnoreabbrev csa cs add
+  "cnoreabbrev csf cs find
+  "cnoreabbrev csk cs kill
+  "cnoreabbrev csr cs reset
+  "cnoreabbrev css cs show
+  "cnoreabbrev csh cs help
+
+  "command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+"endif
+
+" FOr CTAGS
+let g:autotagTagsFile="tags"
+nmap <C-Enter> <C-w><C-]><C-w>T
+
+set tags=tags;/
