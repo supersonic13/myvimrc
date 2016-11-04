@@ -19,12 +19,29 @@ Plugin 'vim-airline/vim-airline-themes'
 "Plugin 'vim-ctrlspace/vim-ctrlspace'
 Plugin 'Raimondi/delimitMate'
 Plugin 'honza/vim-snippets'
+"UntiSnips doesnt work without python !!
 "Plugin 'SirVer/ultisnips'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-unimpaired'
 "NERDcommenter
 Plugin 'scrooloose/nerdcommenter'
+
+Plugin 'scrooloose/syntastic'
+
+"For puppet
+Plugin 'rodjek/vim-puppet'
+
+"For Pythin
+"Plugin 'klen/python-mode'
+Plugin 'jaredly/vim-debug'
+
+" FOR CTAGS
+Plugin 'craigemery/vim-autotag'
 
 call vundle#end()
 filetype plugin indent on
@@ -35,11 +52,12 @@ set ruler
 set number
 set showcmd
 set incsearch
-"set hlsearch
+set hlsearch
 "set tabstop=4
 set clipboard=unnamed
 set tabstop=4 shiftwidth=4 expandtab
-set encoding=utf-8
+"set encoding=utf-8
+set noswapfile
 
 "syntax on
 set mouse=a
@@ -62,6 +80,9 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 "let NERDTreeMapOpenInTab='<ENTER>'
 autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
 
+let g:NERDTreeDirArrowExpandable="+"
+let g:NERDTreeDirArrowCollapsible="~"
+
 "For Ctrl-P
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_clear_cache_on_exit = 0
@@ -70,7 +91,7 @@ let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 " FOr solarised
 syntax enable
 set background=dark
-"set t_Co=16
+set t_Co=16
 let g:solarized_termcolors=256
 colorscheme solarized
 
@@ -120,4 +141,31 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
+
+" For Pythin
+let g:syntastic_python_python_exec = '/c/Python35-32/python'
+let g:syntastic_python_checkers = ['pylint','flake8']
+highlight BadWhitespace ctermbg=red guibg=darkred
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+
+
+" Generic SYNTASTIC options
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"" FOR THE CTAGS
+let g:autotagTagsFile="tags"
+nmap <C-Enter> <C-w><C-]><C-w>T
+
+" Syntastic for C
+" https://github.com/scrooloose/syntastic/wiki/(v3.1.0)---C:---gcc
+let g:syntastic_c_check_header = 1
+let g:syntastic_c_no_default_include_dirs = 1
+" let g:syntastic_c_errorformat = '%f:%l:%c: %trror: %m'
 
