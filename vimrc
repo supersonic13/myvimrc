@@ -34,6 +34,8 @@ Plugin 'rodjek/vim-puppet'
 " FOr CTAGS
 Plugin 'craigemery/vim-autotag'
 
+Plugin 'majutsushi/tagbar'
+
 call vundle#end()
 filetype plugin indent on
 
@@ -73,6 +75,8 @@ let g:nerdtree_tabs_open_on_console_startup = 1
 
 "let NERDTreeMapOpenInTab='<ENTER>'
 autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
+
+"let g:NERDTreeFileNode.GetSelected()
 
 "NerdTree tab mappings by number (Alt + F1, etc)
 "nnoremap <S-F1> 1gt
@@ -164,20 +168,20 @@ endfunction
 
 "" SET CSCOPE : TODO - Try cscope properly
 "if has('cscope')
-  "set cscopetag cscopeverbose
+"set cscopetag cscopeverbose
 
-  "if has('quickfix')
-    "set cscopequickfix=s-,c-,d-,i-,t-,e-
-  "endif
+"if has('quickfix')
+"set cscopequickfix=s-,c-,d-,i-,t-,e-
+"endif
 
-  "cnoreabbrev csa cs add
-  "cnoreabbrev csf cs find
-  "cnoreabbrev csk cs kill
-  "cnoreabbrev csr cs reset
-  "cnoreabbrev css cs show
-  "cnoreabbrev csh cs help
+"cnoreabbrev csa cs add
+"cnoreabbrev csf cs find
+"cnoreabbrev csk cs kill
+"cnoreabbrev csr cs reset
+"cnoreabbrev css cs show
+"cnoreabbrev csh cs help
 
-  "command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+"command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 "endif
 
 " FOr CTAGS
@@ -185,3 +189,6 @@ let g:autotagTagsFile="tags"
 nmap <C-Enter> <C-w><C-]><C-w>T
 
 set tags=tags;/
+
+" FOr tagbar
+nmap <C-?> :TagbarToggle<CR>
