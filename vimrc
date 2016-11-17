@@ -66,6 +66,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
 
 " ----- jistr/vim-nerdtree-tabs -----
 " Open/close NERDTree Tabs with \t
@@ -73,8 +74,16 @@ nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
 " To have NERDTree always open on startup
 let g:nerdtree_tabs_open_on_console_startup = 1
 
+"call NERDTreeAddKeyMap({'key': 't', 'callback': 'NERDTreeMyOpenInTab', 'scope': 'FileNode', 'override': 1 })
+"function NERDTreeMyOpenInTab(node)
+    "call a:node.open({'reuse': "all", 'where': 't'})
+"endfunction
+
+
 "let NERDTreeMapOpenInTab='<ENTER>'
 autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
+
+
 
 "let g:NERDTreeFileNode.GetSelected()
 
@@ -186,9 +195,19 @@ endfunction
 
 " FOr CTAGS
 let g:autotagTagsFile="tags"
-nmap <C-Enter> <C-w><C-]><C-w>T
+"nmap <C-Enter> <C-w><C-]><C-w>T
+
+"" TO open in a diff tab or a vsplit !
+map <C-@> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+"map <C-@> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 
 set tags=tags;/
 
 " FOr tagbar
-nmap <C-?> :TagbarToggle<CR>
+"nmap <C-?> :TagbarToggle<CR>
+nnoremap <C-_> :call GetFileInfo()<cr>
+function! GetFileInfo()
+    TagbarToggle
+    NERDTreeFind
+    wincmd l
+endfunction
