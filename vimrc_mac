@@ -1,0 +1,228 @@
+set nocompatible
+"set hidden
+"set showtabline=0
+"set modifiable
+set modelines=0
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim/
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+
+" ----- Vim as a programmer's text editor -----------------------------
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+"Plugin 'vim-ctrlspace/vim-ctrlspace'
+Plugin 'Raimondi/delimitMate'
+Plugin 'honza/vim-snippets'
+"Plugin 'SirVer/ultisnips'
+"Plugin 'Shougo/neocomplete.vim'
+"Plugin 'valloric/youcompleteme'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-unimpaired'
+"NERDcommenter
+Plugin 'scrooloose/nerdcommenter'
+
+"For Puppet
+Plugin 'rodjek/vim-puppet'
+
+" FOr CTAGS
+Plugin 'craigemery/vim-autotag'
+
+Plugin 'majutsushi/tagbar'
+
+" For Mac terminal
+Plugin 'junegunn/vader.vim'
+
+call vundle#end()
+filetype plugin indent on
+
+" --- General settings ---
+set backspace=indent,eol,start
+set ruler
+set number
+set showcmd
+set incsearch
+set nobackup
+set noswapfile
+set ignorecase
+"set hlsearch
+"set tabstop=4
+if has('unnamedplus')
+      set clipboard=unnamed,unnamedplus
+endif
+set tabstop=4 shiftwidth=4 expandtab
+
+"syntax on
+set mouse=a
+set gfn=Menlo:h14
+set linespace=2
+" NERDTree stuff
+" Startup automatically
+"autocmd vimenter * NERDTree
+"To close NERDTree last
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd BufEnter * if &modifiable | NERDTreeFind | wincmd p | endif
+
+" ----- jistr/vim-nerdtree-tabs -----
+" Open/close NERDTree Tabs with \t
+nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
+" To have NERDTree always open on startup
+let g:nerdtree_tabs_open_on_console_startup = 1
+
+"call NERDTreeAddKeyMap({'key': 't', 'callback': 'NERDTreeMyOpenInTab', 'scope': 'FileNode', 'override': 1 })
+"function NERDTreeMyOpenInTab(node)
+    "call a:node.open({'reuse': "all", 'where': 't'})
+"endfunction
+
+
+"let NERDTreeMapOpenInTab='<ENTER>'
+autocmd BufNew * if winnr('$') == 1 | tabmove99 | endif
+
+
+
+"let g:NERDTreeFileNode.GetSelected()
+
+"NerdTree tab mappings by number (Alt + F1, etc)
+"nnoremap <S-F1> 1gt
+"nnoremap <S-2> 2gt
+"nnoremap <S-3> 3gt
+"nnoremap <S-4> 4gt
+"nnoremap <S-5> 5gt
+
+"For Ctrl-P
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+" FOr solarised
+syntax enable
+syntax on
+"set t_Co=256
+let g:solarized_termcolors=256
+set background=dark
+colorscheme solarized
+"if &background == "dark"     
+    "let s:base03 = "NONE"     
+    "let s:base02 = "NONE"     
+"endif
+
+"For airline
+let g:airline#extensions#tabline#enabled = 1
+
+"For delimiters
+let delimitMate_expand_cr = 1
+augroup mydelimitMate
+  au!
+    au FileType markdown let b:delimitMate_nesting_quotes = ["`"]
+      au FileType tex let b:delimitMate_quotes = ""
+	au FileType tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
+	  au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+augroup END
+
+nmap <Insert> i
+nmap <kInsert> i
+"Easy window navigation
+" Use sed -n l to see what the keys translate to
+nmap <silent> <leader><Up> :wincmd k<CR>
+nmap <silent> <leader><Down> :wincmd j<CR>
+nmap <silent> <leader><Left> :wincmd h<CR>
+nmap <silent> <leader><Right> :wincmd l<CR>
+"nmap <silent> <M-Right>b :wincmd h<CR>
+"nmap <silent> <M-Left>f :wincmd l<CR>
+
+"Easy tab navigation
+map <S-Right> :tabn<CR>
+map <S-Left>  :tabp<CR>
+"Easy buffer(tab) navigation
+"map <S-A-Right> :bn<CR>
+"map <S-A-Left>  :bp<CR>
+"map <Esc><Esc>[C :bn<CR>
+"map <Esc><Esc>[D :bp<CR>
+
+"For Undo
+map <C-z> :u<CR>
+
+"For searcing with Crtl + F
+map <C-f> :call VIMGREP("/<C-R><C-W>/", "**")<left><left><left>
+map <S-f> :call VIMGREP("/<C-R><C-W>/", @%)<left><left><left>
+
+:fu! VIMGREP(greppattern, greppath)
+	exe "vimgrep ".a:greppattern." ".a:greppath
+	exe "copen"
+endfu
+
+""For snippets
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" For shell 
+"autocmd BufEnter * silent! lcd %:p:h
+"map <leader>s :ConqueTermSplit bash<CR>
+"
+""For CTAGS
+" map <S-.> :tag <C-R><C-W><CR>
+
+
+"Awesome completion thing - Thanks to Gav !! C-X C-P !!!! 
+"set omnifunc=syntaxcomplete#Complete
+
+"Toggling key for selecing and pasting
+nnoremap <F5> :call ShowBasicVIM()<cr>
+function! ShowBasicVIM()
+    NERDTreeToggle
+    "NERDTreeFocusToggle
+    "set nonumber
+    set invnumber
+endfunction
+
+"" SET CSCOPE : TODO - Try cscope properly
+"if has('cscope')
+"set cscopetag cscopeverbose
+
+"if has('quickfix')
+"set cscopequickfix=s-,c-,d-,i-,t-,e-
+"endif
+
+"cnoreabbrev csa cs add
+"cnoreabbrev csf cs find
+"cnoreabbrev csk cs kill
+"cnoreabbrev csr cs reset
+"cnoreabbrev css cs show
+"cnoreabbrev csh cs help
+
+"command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+"endif
+
+" FOr CTAGS
+let g:autotagTagsFile="tags"
+"nmap <C-Enter> <C-w><C-]><C-w>T
+
+"" TO open in a diff tab or a vsplit !
+map <C-@> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
+"map <C-@> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+
+set tags=tags;/
+
+" FOr tagbar
+"nmap <C-?> :TagbarToggle<CR>
+nnoremap <C-_> :call GetFileInfo()<cr>
+function! GetFileInfo()
+    TagbarToggle
+    NERDTreeFind
+    wincmd l
+endfunction
