@@ -56,7 +56,7 @@ set ignorecase
 if has('unnamedplus')
       set clipboard=unnamed,unnamedplus
 endif
-set tabstop=4 shiftwidth=4 expandtab
+set tabstop=4 shiftwidth=4 noexpandtab
 
 "syntax on
 set mouse=a
